@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ala
+  labels:
+    name: ala
+spec:
+  containers:
+    - name: ala
+      image: krajewskim/python-api:new

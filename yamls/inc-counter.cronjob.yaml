@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: inc-counter
+  labels:
+    projekt: pbb
+spec:
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  schedule: "* * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        origin: cron
+        projekt: pbb
+    spec:
+      template:
+        metadata:
+          labels:
+            origin: cron-job
+            projekt: pbb
+        spec:
+          containers:
+            - name: increase-counter
+              image: cmd.cat/curl
+              args:
+                - curl
+                - -X
+                - POST
+                - http://python-service/api/v1/info
+          restartPolicy: Never

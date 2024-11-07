@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: python-api
+  labels:
+    name: python-api
+spec:
+  enableServiceLinks: false
+  containers:
+    - name: python-api
+      image: krajewskim/python-api:new
+      ports:
+        - containerPort: 5002
+          name: api
+      resources: {}
+      readinessProbe:
+        tcpSocket:
+          port: api
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: api
